@@ -33,11 +33,30 @@ class Carte {
 public:
 
     /**
+     * @brief Constructeur à deux arguments
+     * @param famille la famille de carte de type unsigned short
+     * @param membre le membre de la carte de type char
+     */
+    Carte(unsigned short famille, char membre);
+
+    /**
      * @brief Compare la famille des deux carte
      * @param carte la carte à comparer de type Carte
      * @return un booléen, true si les familles sont les mêmes
      */
     bool operator== (const Carte& carte) const;
+
+    /**
+     * @brief Retourne la famille de la carte
+     * @return un unsigned short correspondant à la famille
+     */
+    unsigned short getFamille() const;
+
+    /**
+     * @brief Retourne le membre de la carte
+     * @return un char correspondant au membre
+     */
+    char getMembre() const;
 
 private:
     unsigned short famille;
