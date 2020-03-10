@@ -19,7 +19,7 @@ private:
 
 public:
     bool gameFinished();
-    Carte pickCardFromPile(std::vector<Carte> pileDeCarte);
+    Carte pickCardFromPile();
     Joueur& getRandomPlayer();
     void startGame();
     bool gameLoop();

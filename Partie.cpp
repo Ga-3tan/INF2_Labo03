@@ -6,7 +6,7 @@
 #include "Partie.h"
 #include "ParametresJeu.h"
 
-Joueur Partie::getRandomPlayer() {
+Joueur& Partie::getRandomPlayer() {
     return joueurs.at(rand() % joueurs.size());
 }
 
@@ -19,19 +19,20 @@ bool Partie::gameFinished() {
     return pile.empty();
 }
 
-Carte Partie::pickCardFromPile(std::vector<Carte> pileDeCarte) {
-    return *pileDeCarte.end();
+Carte Partie::pickCardFromPile() {
+    return *pile.end();
 }
 
 bool Partie::gameLoop() {
     for (Joueur joueur : joueurs) {
         if (!gameFinished()) {
-            //        do {} while (joueur.detecterFamille()); // en fin de tour le joueur vérifie s'il a des famille a poser
-            joueur.demanderCarte();
+            do {
+                joueur.detecterFamille();
+            } while (joueur.demanderCarte(getRandomPlayer()));
+            joueur.ajouterCarte(pickCardFromPile());
+            joueur.detecterFamille();
         }
-
     }
-
     return !gameFinished();
 }
 
