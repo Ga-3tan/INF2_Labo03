@@ -24,13 +24,17 @@ Carte Partie::pickCardFromPile() {
 }
 
 bool Partie::gameLoop() {
-    for (Joueur joueur : joueurs) {
+    for (Joueur& joueur : joueurs) {
         if (!gameFinished()) {
             do {
                 joueur.detecterFamille();
             } while (joueur.demanderCarte(getRandomPlayer()));
-            joueur.ajouterCarte(pickCardFromPile());
+            if (!pile.empty()) {
+                joueur.ajouterCarte(pickCardFromPile());
+            }
             joueur.detecterFamille();
+        } else {
+            break;
         }
     }
     return !gameFinished();
