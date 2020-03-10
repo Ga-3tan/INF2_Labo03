@@ -19,13 +19,20 @@ Compilateur : gcc
 
 using namespace std;
 
-void Joueur::demanderCarte() {
+void Joueur::demanderCarte(Joueur& joueur) {
+
+
+
+
 
    //cherche la famille la plus remplie possédée
-   //donner un numero de carte non-possédée
+   //demande la carte choisie au pelo d'en face
+   //si il l'a, prend la carte et la met dans sa main
+   //sinon, schade
+   //verifie si il a une famille pleine
 
 }
-void Joueur::detecterFamille() {
+bool Joueur::detecterFamille() {
 
     //verfifier vide
 }
