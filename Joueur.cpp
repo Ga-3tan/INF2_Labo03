@@ -21,10 +21,6 @@ using namespace std;
 
 void Joueur::demanderCarte(Joueur& joueur) {
 
-
-
-
-
    //cherche la famille la plus remplie possédée
    //demande la carte choisie au pelo d'en face
    //si il l'a, prend la carte et la met dans sa main

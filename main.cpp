@@ -1,11 +1,23 @@
 #include <iostream>
+#include <vector>
+#include "ParametresJeu.h"
+#include "Carte.h"
+
+using namespace std;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    std::cout << "Miguel le clochard" << std::endl;
-    //CECI EST UN TEST !!!!
-    //FNDJSKNFJAFNJASN
-    // BON REB TU VOIS ?
-    //oue .
+    vector<Carte> cartesEnJeu;
+
+    // Creer le jeu de cartes
+    for (unsigned short i = 1; i <= NOMBRE_FAMILLES; ++i) {
+        for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
+            cartesEnJeu.emplace_back(i, c);
+        }
+    }
+
+    for(const Carte& c : cartesEnJeu){
+        cout << c << " ";
+    }
+
     return 0;
 }
