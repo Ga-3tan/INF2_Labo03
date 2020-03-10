@@ -19,7 +19,7 @@ Compilateur : gcc
 
 using namespace std;
 
-void Joueur::demanderCarte(Joueur& joueur) {
+bool Joueur::demanderCarte(Joueur& joueur) {
 
    //cherche la famille la plus remplie possédée
    //demande la carte choisie au pelo d'en face
