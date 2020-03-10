@@ -22,7 +22,7 @@ Compilateur : gcc
 
 class Joueur {
 public:
-    void demanderCarte(Joueur& joueur);
+    bool demanderCarte(Joueur& joueur);
     bool detecterFamille();
     bool mainVide();
     Joueur(std::string nom);

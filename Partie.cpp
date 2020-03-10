@@ -2,10 +2,10 @@
 // Created by gaeta on 06.03.2020.
 //
 
-#include <c++/4.8.3/cstdlib>
+#include <cstdlib>
 #include "Partie.h"
 
-Joueur Partie::getRandomPlayer() {
+Joueur& Partie::getRandomPlayer() {
     return joueurs.at(rand() % joueurs.size());
 }
 
@@ -23,12 +23,13 @@ Carte Partie::pickCardFromPile(std::vector<Carte> pileDeCarte) {
 }
 
 bool Partie::gameLoop() {
-    for (Joueur joueur : joueurs) {
+    for (Joueur &joueur : joueurs) {
         if (!gameFinished()) {
-            //        do {} while (joueur.detecterFamille()); // en fin de tour le joueur vérifie s'il a des famille a poser
-            joueur.demanderCarte();
+            do {
+                joueur.detecterFamille();
+            } while (joueur.demanderCarte(getRandomPlayer())); // demanderCarte retourne false si le joueur pioche dans la pile
+            joueur.detecterFamille();
         }
-
     }
 
     return !gameFinished();
