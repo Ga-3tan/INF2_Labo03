@@ -25,7 +25,7 @@ void Joueur::demanderCarte() {
    //donner un numero de carte non-possédée
 
 }
-void Joueur::detecterFamille() {
+bool Joueur::detecterFamille() {
 
     //verfifier vide
 }
