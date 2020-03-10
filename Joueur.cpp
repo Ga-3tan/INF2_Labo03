@@ -19,7 +19,23 @@ Compilateur : gcc
 
 using namespace std;
 
-bool Joueur::demanderCarte(Joueur& joueur) {
+void Joueur::ajouterCarte(Carte carte) {
+    cartesEnMain.push_back(carte);
+}
+
+Carte Joueur::prendreCarte(Carte carte) {
+    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
+
+        return carte;
+    }
+}
+
+void Joueur::demanderCarte(Joueur& joueurAdverse) {
+    //vecteur static
+    //choisis random carte c
+
+    ajouterCarte(joueurAdverse.prendreCarte(c));
+
 
    //cherche la famille la plus remplie possédée
    //demande la carte choisie au pelo d'en face
