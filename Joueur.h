@@ -24,11 +24,13 @@ class Joueur {
 public:
     void ajouterCarte(Carte carte);
     Carte prendreCarte(Carte carte);
-    void demanderCarte(Joueur& joueurAdverse);
+    bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
     bool mainVide();
     Joueur(std::string nom);
-
+    std::vector<Carte> getCartesEnMain() {
+        return cartesEnMain;
+    }
 
 private:
     std::vector<Carte> cartesEnMain;

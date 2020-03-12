@@ -18,6 +18,10 @@ bool Carte::operator==(const Carte& carte) const {
     return this->famille == carte.famille && this->membre == carte.membre;
 }
 
+bool operator<(const Carte &lhs, const Carte &rhs) {
+    return lhs.getFamille() < rhs.getFamille();
+}
+
 std::ostream &operator<<(std::ostream& lhs, const Carte& rhs) {
     return lhs << rhs.famille << rhs.membre;
 }
@@ -27,3 +31,4 @@ Carte::Carte(unsigned short famille, char membre) : famille(famille), membre(mem
 unsigned short Carte::getFamille() const { return famille; }
 
 char Carte::getMembre() const { return membre; }
+

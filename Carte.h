@@ -30,6 +30,14 @@ class Carte {
      */
     friend std::ostream& operator<< (std::ostream& lhs, const Carte& rhs);
 
+    /**
+     * @brief Surcharge d'operateur du comparateur <, permet de comparer deux familles de carte.
+     * @param lhs première Carte
+     * @param rhs deuxième Carte
+     * @return lhs < rhs
+     */
+    friend bool operator< (const Carte& lhs, const Carte& rhs);
+
 public:
 
     /**
