@@ -15,7 +15,7 @@ public:
     bool gameFinished() const;
     Carte piocherCarte();
     Joueur& getRandomPlayer();
-    void startGame();
+    void startGame(std::vector<Joueur>& JoueurList);
     bool gameLoop();
     void endGame();
 
