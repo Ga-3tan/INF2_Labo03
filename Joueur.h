@@ -28,6 +28,7 @@ public:
     void setNbrDePartiesGagnees(unsigned i);
     unsigned getNbrDeFamilles();
     unsigned getNbrDePartiesGagnees();
+    std::string getNom();
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
     bool mainVide() const;
