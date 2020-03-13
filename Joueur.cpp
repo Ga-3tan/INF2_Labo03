@@ -21,6 +21,25 @@ Compilateur : gcc
 
 using namespace std;
 
+
+Joueur::Joueur(string nom) : nom(nom) {}
+
+unsigned Joueur::getNbrDeFamilles() {
+    return nbrDeFamilles;
+}
+
+unsigned Joueur::getNbrDePartiesGagnees() {
+    return nbrDePartiesGagnees;
+}
+
+void Joueur::setNbrDeFamilles(unsigned i) {
+    nbrDeFamilles = i;
+}
+
+void Joueur::setNbrDePartiesGagnees(unsigned i) {
+    nbrDePartiesGagnees = i;
+}
+
 void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
@@ -71,12 +90,12 @@ bool Joueur::detecterFamille() {
                                     cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             // Supprime la famille de la main
             cartesEnMain.erase(cartesEnMain.begin() + debut,cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
+            //incrémente la variable
+            ++nbrDeFamilles;
             return true;
         }
     }
     return false;
 }
-
-Joueur::Joueur(string nom) : nom(nom) {}
 
 bool Joueur::mainVide() const { return cartesEnMain.empty(); }
