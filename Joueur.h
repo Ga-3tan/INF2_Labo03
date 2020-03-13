@@ -24,6 +24,10 @@ class Joueur {
 public:
     void ajouterCarte(const Carte& carte);
     Carte prendreCarte(const Carte& carte);
+    void setNbrDeFamilles(unsigned i);
+    void setNbrDePartiesGagnees(unsigned i);
+    unsigned getNbrDeFamilles();
+    unsigned getNbrDePartiesGagnees();
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
     bool mainVide() const;
@@ -36,6 +40,8 @@ private:
     std::vector<Carte> cartesEnMain;
     std::vector<Carte> famillesSurTable;
     std::string nom;
+    unsigned nbrDeFamilles;
+    unsigned nbrDePartiesGagnees;
 };
 
 
