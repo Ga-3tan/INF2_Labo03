@@ -25,7 +25,7 @@ Carte Partie::piocherCarte() { return *pile.end(); }
 
 bool Partie::gameLoop() {
     for (Joueur& joueur : joueurs) {
-        if (!gameFinished()) {
+        if (!gameFinished()) { // TODO peut-être à retirer
             do {
                 joueur.detecterFamille();
             } while (joueur.demanderCarte(getRandomPlayer()));
@@ -40,9 +40,7 @@ bool Partie::gameLoop() {
     return !gameFinished();
 }
 
-
 void Partie::startGame() {
-
     // Cree le jeu de cartes
     vector<Carte> jeuCartes;
     for (unsigned short i = 1; i <= NOMBRE_FAMILLES; ++i) {
@@ -50,12 +48,11 @@ void Partie::startGame() {
             jeuCartes.emplace_back(i, c);
         }
     }
-
     // Melange les cartes
     shuffle(jeuCartes.begin(), jeuCartes.end(), mt19937(random_device()()));
 
     // Distribution des cartes
-    for (Joueur& joueur : joueurs) {
+    for (Joueur &joueur : joueurs) {
         for (unsigned i = 0; i < CARTES_PAR_JOUEUR; i++) {
             joueur.ajouterCarte(jeuCartes.at(i));
             jeuCartes.erase(jeuCartes.begin() + i);
@@ -67,14 +64,14 @@ void Partie::startGame() {
     while (gameLoop());
 }
 
-
-void Partie::endGame() {/*
+// TODO TO FINISH
+void Partie::endGame() {
     Joueur& gagnant = joueurs.at(0);
     for (Joueur joueur : joueurs) {
         // TODO COMPTER LES NOMBRES DE FAMILLES AVEC LA VARIABLE FAMILLE_POSEE ET LES RAJOUTER AU SCORE
-        if ( NOMBRE_DE_FAMILLE_DU_JOUEUR > gagnant.NOMBRE_DE_FAMILLE) {
+        if ( joueur.NOMBRE_DE_FAMILLE > gagnant.NOMBRE_DE_FAMILLE) {
             gagnant = joueur;
         }
     }
-    std::cout << "le gagnant est : " << gagnant.getNom() << endl;*/
+    std::cout << "le gagnant est : " << gagnant.getNom() << endl;
 }
