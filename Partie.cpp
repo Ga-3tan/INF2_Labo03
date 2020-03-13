@@ -22,13 +22,12 @@ bool Partie::gameFinished() const {
 }
 
 Carte Partie::piocherCarte() { return *pile.end(); }
-
 bool Partie::gameLoop() {
     for (Joueur& joueur : joueurs) {
         if (!gameFinished()) {
             do {
                 joueur.detecterFamille();
-            } while (joueur.demanderCarte(getRandomPlayer()));
+            } while (joueur.demanderCarte());
             if (!pile.empty()) {
                 joueur.ajouterCarte(piocherCarte());
             }
@@ -37,12 +36,9 @@ bool Partie::gameLoop() {
             break;
         }
     }
-    return gameFinished(); // return false si le jeu n'est pas fini
+    return !gameFinished();
 }
-
-void Partie::startGame(vector<Joueur>& JoueurList) {
-    // ajouter les joueurs
-    joueurs = JoueurList;
+void Partie::startGame(std::vector<Joueur>& JoueurList) {
     // Cree le jeu de cartes
     for (unsigned short i = 1; i <= NOMBRE_FAMILLES; ++i) {
         for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
