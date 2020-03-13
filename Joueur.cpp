@@ -14,7 +14,6 @@ Compilateur : gcc
 
 #include "Joueur.h"
 #include "ParametresJeu.h"
-#include "Partie.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -41,28 +40,34 @@ void Joueur::setNbrDePartiesGagnees(unsigned i) {
     nbrDePartiesGagnees = i;
 }
 
-void Joueur::ajouterCarte(const Carte &carte) {
+void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
 
-Carte Joueur::prendreCarte(const Carte &carte) {
+Carte Joueur::prendreCarte(const Carte& carte) {
 //    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
 //
 //        return carte;
 //    }
 }
 
-Carte Joueur::demanderCarte(Joueur &joueurAdverse, vector<Carte> cartesDispo) {
-    for (const Carte& c : cartesEnMain) {
-        cartesDispo.erase(remove_if(cartesDispo.begin(), cartesDispo.end(), c), cartesDispo.end());
-    }
+bool Joueur::demanderCarte(Joueur &joueurAdverse) {
+    //vecteur static
+    //choisis random carte c
 
-    // Demande une carte aleatoirement
-    return cartesDispo.at(rand() % cartesDispo.size());
+//    ajouterCarte(joueurAdverse.prendreCarte(c));
+
+
+    //cherche la famille la plus remplie possédée
+    //demande la carte choisie au pelo d'en face
+    //si il l'a, prend la carte et la met dans sa main
+    //sinon, schade
+    //verifie si il a une famille pleine
+
 }
 
 
-bool Joueur::detecterFamille(vector<Carte> &cartesEnJeu) {
+bool Joueur::detecterFamille() {
     // Trie les cartes en mains
     sort(cartesEnMain.begin(), cartesEnMain.end());
 
@@ -83,11 +88,9 @@ bool Joueur::detecterFamille(vector<Carte> &cartesEnJeu) {
             // Pose la famille
             famillesSurTable.insert(famillesSurTable.end(), cartesEnMain.begin() + debut,
                                     cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
-            // Supprime la famille de la main et du jeu en cours
-            cartesEnMain.erase(cartesEnMain.begin() + debut, cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
-            cartesEnJeu.erase(cartesEnJeu.begin() + debut, cartesEnJeu.begin() + debut + CARTES_PAR_FAMILLE);
-
-            // +1 famille au joueur
+            // Supprime la famille de la main
+            cartesEnMain.erase(cartesEnMain.begin() + debut,cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
+            //incrémente la variable
             ++nbrDeFamilles;
             return true;
         }
