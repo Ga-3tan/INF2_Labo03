@@ -40,30 +40,37 @@ void Joueur::setNbrDePartiesGagnees(unsigned i) {
     nbrDePartiesGagnees = i;
 }
 
-void Joueur::ajouterCarte(const Carte& carte) {
+void Joueur::ajouterCarte(const Carte &carte) {
     cartesEnMain.push_back(carte);
 }
 
-Carte Joueur::prendreCarte(const Carte& carte) {
+Carte Joueur::prendreCarte(const Carte &carte) {
 //    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
 //
 //        return carte;
 //    }
 }
 
-bool Joueur::demanderCarte(Joueur &joueurAdverse) {
-    //vecteur static
-    //choisis random carte c
+Carte Joueur::demanderCarte() const {
+    // Choix de famille aleatoire
+    unsigned short choixFamille = cartesEnMain.at(rand() % cartesEnMain.size()).getFamille();
 
-//    ajouterCarte(joueurAdverse.prendreCarte(c));
+    // Genere les cartes possibles
+    vector<Carte> cartesPossibles;
+    for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
+        cartesPossibles.emplace_back(choixFamille, c);
+    }
 
+    // Supprime les cartes presentes dans la main
+    for (const Carte &c : cartesEnMain) {
+        auto itCarte = find(cartesPossibles.begin(), cartesPossibles.end(), c);
+        if (itCarte != cartesPossibles.end()) {
+            cartesPossibles.erase(itCarte);
+        }
+    }
 
-    //cherche la famille la plus remplie possédée
-    //demande la carte choisie au pelo d'en face
-    //si il l'a, prend la carte et la met dans sa main
-    //sinon, schade
-    //verifie si il a une famille pleine
-
+    // Choix de carte aleatoire
+    return cartesPossibles.at(rand() % cartesPossibles.size());
 }
 
 
@@ -89,7 +96,7 @@ bool Joueur::detecterFamille() {
             famillesSurTable.insert(famillesSurTable.end(), cartesEnMain.begin() + debut,
                                     cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             // Supprime la famille de la main
-            cartesEnMain.erase(cartesEnMain.begin() + debut,cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
+            cartesEnMain.erase(cartesEnMain.begin() + debut, cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             //incrémente la variable
             ++nbrDeFamilles;
             return true;
