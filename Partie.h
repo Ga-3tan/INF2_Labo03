@@ -11,6 +11,8 @@
 
 
 class Partie {
+    friend std::vector<Carte> getJeuCartes();
+
 public:
     bool gameFinished() const;
     Carte piocherCarte();
@@ -19,9 +21,11 @@ public:
     bool gameLoop();
     void endGame();
 
+
 private:
     std::vector<Joueur> joueurs;
     std::vector<Carte> pile;
+    std::vector<Carte> cartesEnJeu;
     bool gameIsFinished;
 };
 

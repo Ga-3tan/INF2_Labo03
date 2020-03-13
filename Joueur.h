@@ -28,8 +28,8 @@ public:
     void setNbrDePartiesGagnees(unsigned i);
     unsigned getNbrDeFamilles();
     unsigned getNbrDePartiesGagnees();
-    bool demanderCarte(Joueur& joueurAdverse);
-    bool detecterFamille();
+    Carte demanderCarte(Joueur& joueurAdverse, std::vector<Carte> cartesDispo);
+    bool detecterFamille(std::vector<Carte>& cartesEnJeu);
     bool mainVide() const;
     Joueur(std::string nom);
     std::vector<Carte> getCartesEnMain() {

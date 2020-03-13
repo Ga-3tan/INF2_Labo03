@@ -42,29 +42,33 @@ bool Partie::gameLoop() {
 
 void Partie::startGame() {
     // Cree le jeu de cartes
-    vector<Carte> jeuCartes;
     for (unsigned short i = 1; i <= NOMBRE_FAMILLES; ++i) {
         for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
-            jeuCartes.emplace_back(i, c);
+            cartesEnJeu.emplace_back(i, c);
         }
     }
+
     // Melange les cartes
-    shuffle(jeuCartes.begin(), jeuCartes.end(), mt19937(random_device()()));
+    vector<Carte> cartesDistrib = cartesEnJeu;
+    shuffle( cartesDistrib.begin(), cartesDistrib.end(), mt19937(random_device()()));
 
     // Distribution des cartes
     for (Joueur &joueur : joueurs) {
         for (unsigned i = 0; i < CARTES_PAR_JOUEUR; i++) {
-            joueur.ajouterCarte(jeuCartes.at(i));
-            jeuCartes.erase(jeuCartes.begin() + i);
+            joueur.ajouterCarte(cartesDistrib.at(i));
+            cartesDistrib.erase(cartesDistrib.begin() + i);
         }
     }
-    pile = jeuCartes;
+    pile = cartesDistrib;
 
     // Boucle de jeu
     while (gameLoop());
 }
 
+//std::vector<Carte> Partie::getJeuCartes() const { return cartesEnJeu; }
+
 // TODO TO FINISH
+/*
 void Partie::endGame() {
     Joueur& gagnant = joueurs.at(0);
     for (Joueur joueur : joueurs) {
@@ -74,4 +78,4 @@ void Partie::endGame() {
         }
     }
     std::cout << "le gagnant est : " << gagnant.getNom() << endl;
-}
+}*/
