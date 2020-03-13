@@ -37,10 +37,12 @@ bool Partie::gameLoop() {
             break;
         }
     }
-    return !gameFinished();
+    return gameFinished(); // return false si le jeu n'est pas fini
 }
 
-void Partie::startGame() {
+void Partie::startGame(vector<Joueur>& JoueurList) {
+    // ajouter les joueurs
+    joueurs = JoueurList;
     // Cree le jeu de cartes
     vector<Carte> jeuCartes;
     for (unsigned short i = 1; i <= NOMBRE_FAMILLES; ++i) {
@@ -61,7 +63,8 @@ void Partie::startGame() {
     pile = jeuCartes;
 
     // Boucle de jeu
-    while (gameLoop());
+    while (!gameLoop());
+    endGame();
 }
 
 // TODO TO FINISH
@@ -73,5 +76,7 @@ void Partie::endGame() {
             gagnant = joueur;
         }
     }
-    std::cout << "le gagnant est : " << gagnant.getNom() << endl;
+    gagnant.SCORE_TOTAL += 1;
+    cout << "le gagnant est : " << gagnant.getNom() << endl;
+    cout << "Partie finie";
 }
