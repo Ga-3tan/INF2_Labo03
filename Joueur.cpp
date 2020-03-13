@@ -44,10 +44,6 @@ void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
 
-string Joueur::getNom() {
-    return nom;
-}
-
 Carte Joueur::prendreCarte(const Carte& carte) {
 //    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
 //
