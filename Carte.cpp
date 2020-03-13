@@ -18,8 +18,8 @@ bool Carte::operator==(const Carte& carte) const {
     return this->famille == carte.famille && this->membre == carte.membre;
 }
 
-bool operator<(const Carte &lhs, const Carte &rhs) {
-    return lhs.getFamille() < rhs.getFamille();
+bool Carte::operator<(const Carte& carte) const {
+    return this->famille < carte.famille;
 }
 
 std::ostream &operator<<(std::ostream& lhs, const Carte& rhs) {

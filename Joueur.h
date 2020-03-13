@@ -22,7 +22,7 @@ Compilateur : gcc
 
 class Joueur {
 public:
-    void ajouterCarte(Carte carte);
+    void ajouterCarte(const Carte& carte);
     Carte prendreCarte(Carte carte);
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
