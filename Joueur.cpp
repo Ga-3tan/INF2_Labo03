@@ -63,6 +63,8 @@ bool Joueur::detecterFamille() {
             //mettre la famille sur la table et les supprimer de la main
             famillesSurTable.insert(famillesSurTable.end(), cartesEnMain.begin() + first, cartesEnMain.begin() + first + 4);
             cartesEnMain.erase(cartesEnMain.begin() + first, cartesEnMain.begin() + first + 4);
+
+            //TODO INCREMENTER LE NOMBRE DE FAMILLES POSÉE
             return true;
         }
     }
