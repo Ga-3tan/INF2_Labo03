@@ -25,7 +25,7 @@ Carte Partie::piocherCarte() { return *pile.end(); }
 
 bool Partie::gameLoop() {
     for (Joueur& joueur : joueurs) {
-        if (!gameFinished()) { // TODO peut-être à retirer
+        if (!gameFinished()) {
             do {
                 joueur.detecterFamille();
             } while (joueur.demanderCarte(getRandomPlayer()));
@@ -67,16 +67,17 @@ void Partie::startGame(vector<Joueur>& JoueurList) {
     endGame();
 }
 
-// TODO TO FINISH
 void Partie::endGame() {
     Joueur& gagnant = joueurs.at(0);
+    cout << "Scores : " << endl;
     for (Joueur joueur : joueurs) {
-        // TODO COMPTER LES NOMBRES DE FAMILLES AVEC LA VARIABLE FAMILLE_POSEE ET LES RAJOUTER AU SCORE
-        if ( joueur.NOMBRE_DE_FAMILLE > gagnant.NOMBRE_DE_FAMILLE) {
+        cout << "-" << joueur.getNom() << " : " << joueur.getNbrDeFamilles() << "familles ("
+             << int(joueur.getNbrDeFamilles()/NOMBRE_FAMILLES*100) << " % des familles)" << endl;
+        if ( joueur.getNbrDeFamilles() > gagnant.getNbrDeFamilles()) {
             gagnant = joueur;
         }
     }
-    gagnant.SCORE_TOTAL += 1;
+    gagnant.setNbrDePartiesGagnees(gagnant.getNbrDePartiesGagnees()+1);
     cout << "le gagnant est : " << gagnant.getNom() << endl;
     cout << "Partie finie";
 }
