@@ -25,7 +25,7 @@ void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
 
-Carte Joueur::prendreCarte(Carte carte) {
+Carte Joueur::prendreCarte(const Carte& carte) {
 //    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
 //
 //        return carte;
@@ -71,18 +71,12 @@ bool Joueur::detecterFamille() {
                                     cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             // Supprime la famille de la main
             cartesEnMain.erase(cartesEnMain.begin() + debut,cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
-            //incrémente la donnée membre nbrDeFamille
-            ++nbrDeFamille;
             return true;
         }
     }
     return false;
 }
 
-unsigned Joueur::getNbrDeFamille() {
-    return this->nbrDeFamille;
-}
+Joueur::Joueur(string nom) : nom(nom) {}
 
-Joueur::Joueur(string nom) : nom(nom), nbrDeFamille(0) {}
-
-bool Joueur::mainVide() { return cartesEnMain.empty(); }
+bool Joueur::mainVide() const { return cartesEnMain.empty(); }
