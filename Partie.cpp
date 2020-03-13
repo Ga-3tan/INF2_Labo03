@@ -57,9 +57,8 @@ void Partie::startGame() {
         }
     }
     pile = cartesEnJeu; // TODO à mélanger si on mélange ne mélange pas avant
-    do {
-        game = gameLoop();
-    } while (game);
+    while(gameLoop());
+    endGame();
 }
 
 // TODO TO FINISH
@@ -67,7 +66,7 @@ void Partie::endGame() {
     Joueur& gagnant = joueurs.at(0);
     for (Joueur joueur : joueurs) {
         // TODO COMPTER LES NOMBRES DE FAMILLES AVEC LA VARIABLE FAMILLE_POSEE ET LES RAJOUTER AU SCORE
-        if ( NOMBRE_DE_FAMILLE_DU_JOUEUR > gagnant.NOMBRE_DE_FAMILLE) {
+        if ( joueur.NOMBRE_DE_FAMILLE > gagnant.NOMBRE_DE_FAMILLE) {
             gagnant = joueur;
         }
     }
