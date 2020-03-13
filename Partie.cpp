@@ -2,16 +2,18 @@
 // Created by gaeta on 06.03.2020.
 //
 
-#include <cstdlib>
 #include "Partie.h"
 #include "ParametresJeu.h"
+#include <random>
+#include <vector>
+#include <algorithm>
 
-Joueur& Partie::getRandomPlayer() {
-    return joueurs.at(rand() % joueurs.size());
-}
+using namespace std;
 
-bool Partie::gameFinished() {
-    for (Joueur joueur : joueurs) {
+Joueur& Partie::getRandomPlayer() { return joueurs.at(rand() % joueurs.size()); }
+
+bool Partie::gameFinished() const {
+    for (const Joueur& joueur : joueurs) {
         if (!joueur.mainVide()) {
             return false;
         }
@@ -19,9 +21,7 @@ bool Partie::gameFinished() {
     return pile.empty();
 }
 
-Carte Partie::pickCardFromPile() {
-    return *pile.end();
-}
+Carte Partie::piocherCarte() { return *pile.end(); }
 
 bool Partie::gameLoop() {
     for (Joueur& joueur : joueurs) {
@@ -30,7 +30,7 @@ bool Partie::gameLoop() {
                 joueur.detecterFamille();
             } while (joueur.demanderCarte(getRandomPlayer()));
             if (!pile.empty()) {
-                joueur.ajouterCarte(pickCardFromPile());
+                joueur.ajouterCarte(piocherCarte());
             }
             joueur.detecterFamille();
         } else {
@@ -41,24 +41,27 @@ bool Partie::gameLoop() {
 }
 
 void Partie::startGame() {
-    bool game;
-    // Creer le jeu de cartes
+    // Cree le jeu de cartes
+    vector<Carte> jeuCartes;
     for (unsigned short i = 1; i <= NOMBRE_FAMILLES; ++i) {
         for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
-            cartesEnJeu.emplace_back(i, c);
+            jeuCartes.emplace_back(i, c);
         }
     }
+    // Melange les cartes
+    shuffle(jeuCartes.begin(), jeuCartes.end(), mt19937(random_device()()));
+
     // Distribution des cartes
-    for (Joueur joueur : joueurs) {
+    for (Joueur &joueur : joueurs) {
         for (unsigned i = 0; i < CARTES_PAR_JOUEUR; i++) {
-            auto tmp = rand() % cartesEnJeu.size(); // TODO à enlever si on mélange le tas avant
-            joueur.ajouterCarte(cartesEnJeu.at(tmp));
-            cartesEnJeu.erase(cartesEnJeu.begin()+tmp);
+            joueur.ajouterCarte(jeuCartes.at(i));
+            jeuCartes.erase(jeuCartes.begin() + i);
         }
     }
-    pile = cartesEnJeu; // TODO à mélanger si on mélange ne mélange pas avant
-    while(gameLoop());
-    endGame();
+    pile = jeuCartes;
+
+    // Boucle de jeu
+    while (gameLoop());
 }
 
 // TODO TO FINISH

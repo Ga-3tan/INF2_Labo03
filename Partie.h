@@ -11,20 +11,18 @@
 
 
 class Partie {
-private:
-    std::vector<Joueur> joueurs;
-    std::vector<Carte> cartesEnJeu; //sera mis a jour en debut de partie et à chaque famille compléter
-    std::vector<Carte> pile;
-    bool gameIsFinished;
-
 public:
-    bool gameFinished();
-    Carte pickCardFromPile();
+    bool gameFinished() const;
+    Carte piocherCarte();
     Joueur& getRandomPlayer();
     void startGame();
     bool gameLoop();
     void endGame();
 
+private:
+    std::vector<Joueur> joueurs;
+    std::vector<Carte> pile;
+    bool gameIsFinished;
 };
 
 

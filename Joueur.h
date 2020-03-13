@@ -23,10 +23,10 @@ Compilateur : gcc
 class Joueur {
 public:
     void ajouterCarte(const Carte& carte);
-    Carte prendreCarte(Carte carte);
+    Carte prendreCarte(const Carte& carte);
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
-    bool mainVide();
+    bool mainVide() const;
     Joueur(std::string nom);
     std::vector<Carte> getCartesEnMain() {
         return cartesEnMain;

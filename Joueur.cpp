@@ -25,7 +25,7 @@ void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
 
-Carte Joueur::prendreCarte(Carte carte) {
+Carte Joueur::prendreCarte(const Carte& carte) {
 //    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
 //
 //        return carte;
@@ -77,7 +77,6 @@ bool Joueur::detecterFamille() {
     return false;
 }
 
-
 Joueur::Joueur(string nom) : nom(nom) {}
 
-bool Joueur::mainVide() { return cartesEnMain.empty(); }
+bool Joueur::mainVide() const { return cartesEnMain.empty(); }
