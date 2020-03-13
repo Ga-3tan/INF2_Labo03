@@ -18,12 +18,13 @@ Compilateur : gcc
 #include "Carte.h"
 #include <vector>
 #include <string>
-
+#include "Partie.h"
 
 class Joueur {
 public:
     void ajouterCarte(const Carte& carte);
     Carte prendreCarte(Carte carte);
+    unsigned getNbrDeFamille();
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
     bool mainVide();
@@ -36,6 +37,7 @@ private:
     std::vector<Carte> cartesEnMain;
     std::vector<Carte> famillesSurTable;
     std::string nom;
+    unsigned nbrDeFamille;
     };
 
 
