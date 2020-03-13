@@ -13,6 +13,7 @@ Compilateur : gcc
 --------------------------- */
 
 #include "Joueur.h"
+#include "ParametresJeu.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -20,7 +21,7 @@ Compilateur : gcc
 
 using namespace std;
 
-void Joueur::ajouterCarte(Carte carte) {
+void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
 
@@ -31,47 +32,52 @@ Carte Joueur::prendreCarte(Carte carte) {
 //    }
 }
 
-bool Joueur::demanderCarte(Joueur& joueurAdverse) {
+bool Joueur::demanderCarte(Joueur &joueurAdverse) {
     //vecteur static
     //choisis random carte c
 
 //    ajouterCarte(joueurAdverse.prendreCarte(c));
 
 
-   //cherche la famille la plus remplie possédée
-   //demande la carte choisie au pelo d'en face
-   //si il l'a, prend la carte et la met dans sa main
-   //sinon, schade
-   //verifie si il a une famille pleine
+    //cherche la famille la plus remplie possédée
+    //demande la carte choisie au pelo d'en face
+    //si il l'a, prend la carte et la met dans sa main
+    //sinon, schade
+    //verifie si il a une famille pleine
 
 }
-bool Joueur::detecterFamille() {
-    //carte en main triée
-    sort(cartesEnMain.begin(), cartesEnMain.end());
-    unsigned short current = cartesEnMain.begin()->getFamille();
-    unsigned cnt = 0;
-    unsigned first = 0;
-    for (unsigned i = 0; i < cartesEnMain.size(); i++) {
-        if (current == cartesEnMain.at(i).getFamille()) {
-            cnt++;
-        } else {
-            cnt = 1;
-            current = cartesEnMain.at(i).getFamille();
-            first = i;
-        }
-        if (cnt == 4) {
-            //mettre la famille sur la table et les supprimer de la main
-            famillesSurTable.insert(famillesSurTable.end(), cartesEnMain.begin() + first, cartesEnMain.begin() + first + 4);
-            cartesEnMain.erase(cartesEnMain.begin() + first, cartesEnMain.begin() + first + 4);
 
-            //TODO INCREMENTER LE NOMBRE DE FAMILLES POSÉE
+
+bool Joueur::detecterFamille() {
+    // Trie les cartes en mains
+    sort(cartesEnMain.begin(), cartesEnMain.end());
+
+    // Verifie la main
+    unsigned compteur = 0;
+    unsigned debut = 0;
+    unsigned short familleCourante = cartesEnMain.front().getFamille();
+    for (size_t i = 0; i < cartesEnMain.size(); i++) {
+        if (cartesEnMain.at(i).getFamille() == familleCourante) {
+            compteur++;
+        } else {
+            compteur = 1;
+            familleCourante = cartesEnMain.at(i).getFamille();
+            debut = i;
+        }
+
+        if (compteur == CARTES_PAR_FAMILLE) {
+            // Pose la famille
+            famillesSurTable.insert(famillesSurTable.end(), cartesEnMain.begin() + debut,
+                                    cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
+            // Supprime la famille de la main
+            cartesEnMain.erase(cartesEnMain.begin() + debut,cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             return true;
         }
     }
+    return false;
 }
+
+
 Joueur::Joueur(string nom) : nom(nom) {}
 
-bool Joueur::mainVide() {
-    if(cartesEnMain.empty())
-        return true;
-}
+bool Joueur::mainVide() { return cartesEnMain.empty(); }

@@ -28,17 +28,14 @@ class Carte {
      * @details Format: (unsigned short)famille (char)membre,
      *          Exemple: famille 2, membre C -> "2C"
      */
-    friend std::ostream& operator<< (std::ostream& lhs, const Carte& rhs);
-
-    /**
-     * @brief Surcharge d'operateur du comparateur <, permet de comparer deux familles de carte.
-     * @param lhs première Carte
-     * @param rhs deuxième Carte
-     * @return lhs < rhs
-     */
-    friend bool operator< (const Carte& lhs, const Carte& rhs);
+    friend std::ostream &operator<<(std::ostream &lhs, const Carte &rhs);
 
 public:
+
+    /**
+     * Constructeur sans argument
+     */
+    Carte() = default;
 
     /**
      * @brief Constructeur à deux arguments
@@ -48,11 +45,18 @@ public:
     Carte(unsigned short famille, char membre);
 
     /**
-     * @brief Compare la famille des deux carte
+     * @brief Compare la famille et les membres de deux cartes
      * @param carte la carte à comparer de type Carte
-     * @return un booléen, true si les familles sont les mêmes
+     * @return un booléen, true si les familles et les membres sont les mêmes
      */
-    bool operator== (const Carte& carte) const;
+    bool operator==(const Carte& carte) const;
+
+    /**
+    * @brief Surcharge d'operateur du comparateur <, ompare les familles des deux cartes.
+    * @param carte la carte à comparer de type Carte
+    * @return un booleen, true si this->famille < carte.famille
+    */
+    bool operator<(const Carte& carte) const;
 
     /**
      * @brief Retourne la famille de la carte
