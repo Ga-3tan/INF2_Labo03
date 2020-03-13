@@ -20,6 +20,7 @@ public:
     void startGame(std::vector<Joueur>& JoueurList);
     bool gameLoop();
     void endGame();
+    void afficherTour();
 
 
 private:
@@ -27,6 +28,7 @@ private:
     std::vector<Carte> pile;
     std::vector<Carte> cartesEnJeu;
     bool gameIsFinished;
+    unsigned nbTour = 0;
 };
 
 

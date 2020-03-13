@@ -51,17 +51,16 @@ void Partie::startGame(vector<Joueur>& JoueurList) {
     }
 
     // Melange les cartes
-    vector<Carte> cartesDistrib = cartesEnJeu;
-    shuffle( cartesDistrib.begin(), cartesDistrib.end(), mt19937(random_device()()));
+    pile = cartesEnJeu;
+    shuffle( pile.begin(), pile.end(), mt19937(random_device()()));
 
     // Distribution des cartes
     for (Joueur &joueur : joueurs) {
         for (unsigned i = 0; i < CARTES_PAR_JOUEUR; i++) {
-            joueur.ajouterCarte(cartesDistrib.at(i));
-            cartesDistrib.erase(cartesDistrib.begin() + i);
+            joueur.ajouterCarte(pile.at(i));
+            pile.erase(pile.begin() + i);
         }
     }
-    pile = cartesDistrib;
 
     // Boucle de jeu
     while (!gameLoop());
@@ -70,6 +69,11 @@ void Partie::startGame(vector<Joueur>& JoueurList) {
 
 void Partie::endGame() {
     Joueur& gagnant = joueurs.at(0);
+    gagnant.setNbrDePartiesGagnees(gagnant.getNbrDePartiesGagnees()+1);
+    cout << "le gagnant est : " << gagnant.getNom() << endl;
+    cout << "Partie finie";
+    cout << "Nombre de tours : " << nbTour;
+
     cout << "Scores : " << endl;
     for (Joueur joueur : joueurs) {
         cout << "-" << joueur.getNom() << " : " << joueur.getNbrDeFamilles() << "familles ("
@@ -78,7 +82,23 @@ void Partie::endGame() {
             gagnant = joueur;
         }
     }
-    gagnant.setNbrDePartiesGagnees(gagnant.getNbrDePartiesGagnees()+1);
-    cout << "le gagnant est : " << gagnant.getNom() << endl;
-    cout << "Partie finie";
+}
+
+void Partie::afficherTour() {
+    cout << "*** Tour " << ++nbTour << " ***" << endl;
+    for (Joueur joueur : joueurs) {
+        cout << joueur.getNom() << " : ";
+        for (Carte carte : joueur.getCartesEnMain()) {
+            cout << carte << "  ";
+        }
+        for (Carte carte : joueur.getFamillesSurTable()) {
+            cout << "[" << carte << ".";
+        }
+        cout << "]" << endl;
+    }
+    cout << "Pioche : ";
+    for (Carte carte : pile) {
+        cout << carte << " ";
+    }
+    cout << endl;
 }

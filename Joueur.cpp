@@ -99,3 +99,7 @@ bool Joueur::detecterFamille() {
 }
 
 bool Joueur::mainVide() const { return cartesEnMain.empty(); }
+
+std::string Joueur::getNom() {
+    return nom;
+}

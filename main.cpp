@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <c++/4.8.3/algorithm>
 #include "ParametresJeu.h"
 #include "Carte.h"
 #include "Joueur.h"

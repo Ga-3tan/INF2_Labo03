@@ -31,9 +31,13 @@ public:
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
     bool mainVide() const;
+    std::string getNom();
     Joueur(std::string nom);
     std::vector<Carte> getCartesEnMain() {
         return cartesEnMain;
+    }
+    std::vector<Carte> getFamillesSurTable() {
+        return famillesSurTable;
     }
 
 private:
