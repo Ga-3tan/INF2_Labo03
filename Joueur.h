@@ -25,6 +25,9 @@ public:
     void ajouterCarte(const Carte& carte);
     Carte prendreCarte(Carte carte);
     unsigned getNbrDeFamille();
+    unsigned getNbrDePartiesGagnees();
+    void setNbrDeFamille();
+    void setNbrDePartiesGagnees();
     bool demanderCarte(Joueur& joueurAdverse);
     bool detecterFamille();
     bool mainVide();
@@ -38,6 +41,7 @@ private:
     std::vector<Carte> famillesSurTable;
     std::string nom;
     unsigned nbrDeFamille;
+    unsigned nbrDePartiesGagnees;
     };
 
 
