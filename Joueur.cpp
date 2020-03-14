@@ -1,17 +1,17 @@
-/* ---------------------------
-Laboratoire : 03
-Fichier :
-Auteur(s) : Rébecca Tevaearai, Gaeta, Miguela
-Date : 06.03.2020
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : 03
+ Fichier     : Joueur.cpp
+ Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
+ Date        : 06.03.2020
 
-But :
+ But         : <à compléter>
 
-Remarque(s) :
+ Remarque(s) : <à compléter>
 
-Compilateur : gcc
-
---------------------------- */
-
+ Compilateur : g++ 7.4.0
+ -----------------------------------------------------------------------------------
+*/
 #include "Joueur.h"
 #include "ParametresJeu.h"
 #include <string>
@@ -21,35 +21,35 @@ Compilateur : gcc
 using namespace std;
 
 
-Joueur::Joueur(string nom) : nom(nom) {}
-
-unsigned Joueur::getNbrDeFamilles() {
-    return nbrDeFamilles;
+Joueur::Joueur(string nom) : nom(nom) {
+    nbFamilles = 0;
+    nbVictoires = 0;
 }
 
-unsigned Joueur::getNbrDePartiesGagnees() {
-    return nbrDePartiesGagnees;
-}
+unsigned Joueur::getNbrDeFamilles() const{ return nbFamilles; }
 
-void Joueur::setNbrDeFamilles(unsigned i) {
-    nbrDeFamilles = i;
-}
+unsigned Joueur::getNbrDePartiesGagnees() const{ return nbVictoires; }
 
-void Joueur::setNbrDePartiesGagnees(unsigned i) {
-    nbrDePartiesGagnees = i;
-}
+void Joueur::setNbrDeFamilles(unsigned i) { nbFamilles = i; }
 
-void Joueur::ajouterCarte(const Carte &carte) {
+void Joueur::setNbrDePartiesGagnees(unsigned i) { nbVictoires = i; }
+
+void Joueur::ajouterCarte(const Carte& carte) {
     cartesEnMain.push_back(carte);
 }
 
-Carte Joueur::prendreCarte(const Carte &carte) {
-//    if(find(cartesEnMain.begin(), cartesEnMain.end(), carte)){
-//
-//        return carte;
-//    }
+bool Joueur::donnerCarte(Joueur& demandeur, const Carte& carte) {
+    auto itCarte = find(cartesEnMain.begin(), cartesEnMain.end(), carte);
+    if(itCarte == cartesEnMain.end()){
+        return false;
+    } else{
+        demandeur.ajouterCarte(carte);
+        cartesEnMain.erase(itCarte);
+        return true;
+    }
 }
 
+// TODO  ajouter warning a doxygen /!\ Verifier que la main du joueur n'est pas vide
 Carte Joueur::demanderCarte() const {
     // Choix de famille aleatoire
     unsigned short choixFamille = cartesEnMain.at(rand() % cartesEnMain.size()).getFamille();
@@ -97,7 +97,7 @@ bool Joueur::detecterFamille() {
             // Supprime la famille de la main
             cartesEnMain.erase(cartesEnMain.begin() + debut, cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             //incrémente la variable
-            ++nbrDeFamilles;
+            ++nbFamilles;
             return true;
         }
     }
@@ -106,6 +106,10 @@ bool Joueur::detecterFamille() {
 
 bool Joueur::mainVide() const { return cartesEnMain.empty(); }
 
-std::string Joueur::getNom() {
-    return nom;
+std::string Joueur::getNom() const { return nom; }
+
+bool Joueur::operator==(const Joueur& joueur2) const {
+    return this->nom == joueur2.nom;
 }
+
+

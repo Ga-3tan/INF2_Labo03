@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Laboratoire : 03
  Fichier     : Carte.h
- Auteur(s)   : Miguel Do Vale Lopes
+ Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
  But         : <à compléter>
@@ -12,9 +12,8 @@
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
 */
-
-#ifndef INF2_LABO03_CARTE_H
-#define INF2_LABO03_CARTE_H
+#ifndef CARTE_H
+#define CARTE_H
 
 #include <iostream>
 
@@ -52,7 +51,7 @@ public:
     bool operator==(const Carte& carte) const;
 
     /**
-    * @brief Surcharge d'operateur du comparateur <, ompare les familles des deux cartes.
+    * @brief Surcharge d'operateur de comparaison (<), compare les familles des deux cartes.
     * @param carte la carte à comparer de type Carte
     * @return un booleen, true si this->famille < carte.famille
     */
@@ -76,4 +75,4 @@ private:
 };
 
 
-#endif //INF2_LABO03_CARTE_H
+#endif //CARTE_H

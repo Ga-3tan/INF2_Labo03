@@ -1,19 +1,19 @@
-/* ---------------------------
-Laboratoire : 03
-Fichier :
-Auteur(s) : Rébecca Tevaearai, Gaeta, Miguela
-Date : 06.03.2020
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : 03
+ Fichier     : Joueur.h
+ Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
+ Date        : 06.03.2020
 
-But :
+ But         : <à compléter>
 
-Remarque(s) :
+ Remarque(s) : <à compléter>
 
-Compilateur : gcc
-
---------------------------- */
-
-#ifndef INF2_LABO03_JOUEUR_H
-#define INF2_LABO03_JOUEUR_H
+ Compilateur : g++ 7.4.0
+ -----------------------------------------------------------------------------------
+*/
+#ifndef JOUEUR_H
+#define JOUEUR_H
 
 #include "Carte.h"
 #include <vector>
@@ -22,31 +22,34 @@ Compilateur : gcc
 
 class Joueur {
 public:
+    //TODO Mettre au propre tt ces fonctions (nom trop long ou fct inutile) + Doxygen
     void ajouterCarte(const Carte& carte);
-    Carte prendreCarte(const Carte& carte);
     void setNbrDeFamilles(unsigned i);
     void setNbrDePartiesGagnees(unsigned i);
-    unsigned getNbrDeFamilles();
-    unsigned getNbrDePartiesGagnees();
+    unsigned getNbrDeFamilles() const;
+    unsigned getNbrDePartiesGagnees() const;
     Carte demanderCarte() const;
+    bool donnerCarte(Joueur& demandeur, const Carte& carte);
     bool detecterFamille();
     bool mainVide() const;
-    std::string getNom();
+    std::string getNom() const;
     Joueur(std::string nom);
-    std::vector<Carte> getCartesEnMain() {
+    std::vector<Carte> getCartesEnMain() const {
         return cartesEnMain;
     }
-    std::vector<Carte> getFamillesSurTable() {
+    std::vector<Carte> getFamillesSurTable() const {
         return famillesSurTable;
     }
+
+    bool operator== (const Joueur& joueur2) const;
 
 private:
     std::vector<Carte> cartesEnMain;
     std::vector<Carte> famillesSurTable;
     std::string nom;
-    unsigned nbrDeFamilles;
-    unsigned nbrDePartiesGagnees;
+    unsigned nbFamilles;
+    unsigned nbVictoires;
 };
 
 
-#endif //INF2_LABO03_JOUEUR_H
+#endif //JOUEUR_H

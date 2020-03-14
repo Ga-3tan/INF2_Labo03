@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Laboratoire : 03
  Fichier     : Carte.cpp
- Auteur(s)   : Miguel Do Vale Lopes
+ Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
  But         : <à compléter>
