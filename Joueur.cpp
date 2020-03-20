@@ -21,7 +21,7 @@
 using namespace std;
 
 
-Joueur::Joueur(string nom) : nom(nom) {
+Joueur::Joueur(const string& nom) : nom(nom) {
     nbFamilles = 0;
     nbVictoires = 0;
 }
@@ -49,7 +49,7 @@ bool Joueur::donnerCarte(Joueur& demandeur, const Carte& carte) {
     }
 }
 
-// TODO  ajouter warning a doxygen /!\ Verifier que la main du joueur n'est pas vide
+// TODO  ajouter warning a doxygen: " /!\ Verifier que la main du joueur n'est pas vide "
 Carte Joueur::demanderCarte() const {
     // Choix de famille aleatoire
     unsigned short choixFamille = cartesEnMain.at(rand() % cartesEnMain.size()).getFamille();
@@ -96,6 +96,7 @@ bool Joueur::detecterFamille() {
                                     cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
             // Supprime la famille de la main
             cartesEnMain.erase(cartesEnMain.begin() + debut, cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
+
             //incrémente la variable
             ++nbFamilles;
             return true;
@@ -112,4 +113,7 @@ bool Joueur::operator==(const Joueur& joueur2) const {
     return this->nom == joueur2.nom;
 }
 
-
+void Joueur::videTout() {
+    cartesEnMain.clear();
+    famillesSurTable.clear();
+}

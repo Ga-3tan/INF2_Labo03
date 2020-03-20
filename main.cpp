@@ -18,6 +18,7 @@
 #include "ParametresJeu.h"
 #include "Partie.h"
 #include "Joueur.h"
+#include "MeilleurJoueur.h"
 #include "Carte.h"
 
 using namespace std;
@@ -25,26 +26,28 @@ using namespace std;
 // TODO toute la fct main()
 int main() {
 
-    // Liste des joueurs
-    const vector<Joueur> LISTE_JOUEURS = {{"Alice"},
-                                          {"Bobby"},
-                                          {"Carol"},
-                                          {"Danny"}};
+
     const unsigned NB_PARTIES = 100;
 
     // Seed pour le random
     srand(time(NULL));
 
     // Test N parties
-    //for(size_t i = 0; i < NB_PARTIES; ++i){
+    for (size_t i = 0; i < NB_PARTIES; ++i) {
+        // Liste des joueurs
+        MeilleurJoueur j1("Alice");
+        Joueur j2("Bobby");
+        Joueur j3("Carol");
+        Joueur j4("Danny");
+
+        vector<Joueur*> listeJoueur = {&j1, &j2, &j3, &j4};
 
         //Cree la partie
-        Partie partie(LISTE_JOUEURS);
+        Partie partie(listeJoueur);
 
         //Lance la partie
         partie.startGame();
-
-    //}
+    }
 
     return 0;
 }

@@ -28,12 +28,12 @@ public:
     void setNbrDePartiesGagnees(unsigned i);
     unsigned getNbrDeFamilles() const;
     unsigned getNbrDePartiesGagnees() const;
-    Carte demanderCarte() const;
+    virtual Carte demanderCarte() const;
     bool donnerCarte(Joueur& demandeur, const Carte& carte);
     bool detecterFamille();
     bool mainVide() const;
     std::string getNom() const;
-    Joueur(std::string nom);
+    Joueur(const std::string& nom);
     std::vector<Carte> getCartesEnMain() const {
         return cartesEnMain;
     }
@@ -41,9 +41,11 @@ public:
         return famillesSurTable;
     }
 
+    void videTout();
+
     bool operator== (const Joueur& joueur2) const;
 
-private:
+protected:
     std::vector<Carte> cartesEnMain;
     std::vector<Carte> famillesSurTable;
     std::string nom;

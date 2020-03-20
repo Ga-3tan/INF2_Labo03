@@ -20,7 +20,7 @@
 
 using namespace std;
 
-Partie::Partie(const vector<Joueur> &listeJoueurs) : listeJoueurs(listeJoueurs) {}
+Partie::Partie(const vector<Joueur*>& listeJoueurs) : listeJoueurs(listeJoueurs) {}
 
 Carte Partie::piocherCarte() {
     Carte carte = *(pioche.end() - 1);
@@ -29,22 +29,22 @@ Carte Partie::piocherCarte() {
 }
 
 // TODO peut être ameliorer...
-Joueur &Partie::choisirJoueur(const Joueur &demandeur) {
+Joueur* Partie::choisirJoueur(const Joueur& demandeur) {
     // Liste des joueurs possibles
-    vector<Joueur> joueursPossible;
-    for (const Joueur &joueur : listeJoueurs) {
-        if (!(joueur == demandeur || joueur.mainVide())) {
+    vector<Joueur*> joueursPossible;
+    for (const auto joueur : listeJoueurs) {
+        if (!(*joueur == demandeur || joueur->mainVide())) {
             joueursPossible.push_back(joueur);
         }
     }
     // Retourne un joueur aleatoire
-    Joueur &joueurChoisi = joueursPossible.at(rand() % joueursPossible.size());
+    Joueur* joueurChoisi = joueursPossible.at(rand() % joueursPossible.size());
     return *find(listeJoueurs.begin(), listeJoueurs.end(), joueurChoisi);
 }
 
 bool Partie::gameFinished() const {
-    for (const Joueur &joueur : listeJoueurs) {
-        if (!joueur.mainVide()) {
+    for (const auto joueur : listeJoueurs) {
+        if (!joueur->mainVide()) {
             return false;
         }
     }
@@ -58,58 +58,43 @@ bool Partie::gameLoop() {
         afficherTour();
 
         // Chaque joueur tour a tour
-        for (Joueur &joueurCourant : listeJoueurs) {
+        for (Joueur* joueurCourant : listeJoueurs) {
             if (!gameFinished()) {
                 bool possedeCarte;
                 do {
-                    // Pose les familles si possible
-                    joueurCourant.detecterFamille();
-
                     // Demande une carte s'il peut
                     possedeCarte = false;
-                    if (!(joueurCourant.mainVide() && pioche.empty())) {
+                    if(!joueurCourant->mainVide()) {
+                        //if (!(joueurCourant->mainVide() && pioche.empty())) {
 
-                        // Choisi joueur et carte
-                        Carte carteChoisi = joueurCourant.demanderCarte();
-                        Joueur& joueurChoisi = choisirJoueur(joueurCourant);
-                        cout << joueurCourant.getNom() << " demande a " << joueurChoisi.getNom()
-                             << " la carte " << carteChoisi << endl;
+                            // Choisi joueur et carte
+                            Carte carteChoisi = joueurCourant->demanderCarte();
+                            Joueur *joueurChoisi = choisirJoueur(*joueurCourant);
+                            cout << joueurCourant->getNom() << " demande a " << joueurChoisi->getNom()
+                                 << " la carte " << carteChoisi << endl;
 
-                        // Verifie et donne la carte si oui
-                        possedeCarte = joueurChoisi.donnerCarte(joueurCourant, carteChoisi);
-                        if(possedeCarte){
-                            cout << "  et " << joueurChoisi.getNom() << " donne la carte a "
-                                 << joueurCourant.getNom() << endl;
-                        }else{
-                            cout << "  mais " << joueurChoisi.getNom() << " ne l'a pas" << endl;
-                        }
+                            // Verifie et donne la carte si oui
+                            possedeCarte = joueurChoisi->donnerCarte(*joueurCourant, carteChoisi);
+                            if (possedeCarte) {
+                                cout << "  et " << joueurChoisi->getNom() << " donne la carte a "
+                                     << joueurCourant->getNom() << endl;
+                            } else {
+                                cout << "  mais " << joueurChoisi->getNom() << " ne l'a pas" << endl;
+                            }
+                        //}
                     }
+
+                    // Pose les familles si possible
+                    joueurCourant->detecterFamille();
+
                 } while (possedeCarte); // Rejoue si il a recu une carte
 
                 // Pioche une carte
                 if (!pioche.empty()) {
-                    joueurCourant.ajouterCarte(piocherCarte());
-                    joueurCourant.detecterFamille();
+                    joueurCourant->ajouterCarte(piocherCarte());
+                    joueurCourant->detecterFamille();
                 }
             } else {
-
-                //TODO Pas forcement utile, mais correspond à l'output du pdf
-                for (const Joueur &joueur : listeJoueurs) {
-                    cout << joueur.getNom() << " : ";
-                    for (Carte carte : joueur.getCartesEnMain()) {
-                        cout << carte << "  ";
-                    }
-                    cout << "[";
-                    for (Carte carte : joueur.getFamillesSurTable()) {
-                        cout << carte << ".";
-                    }
-                    cout << "]" << endl;
-                }
-                cout << "Pioche : ";
-                for (Carte carte : pioche) {
-                    cout << carte << " ";
-                }
-                cout << endl;
                 break;
             }
         }
@@ -133,9 +118,9 @@ void Partie::startGame() {
     random_shuffle(pioche.begin(), pioche.end());
 
     // Distribution des cartes
-    for (Joueur &joueur : listeJoueurs) {
+    for (Joueur* joueur : listeJoueurs) {
         for (unsigned i = 0; i < CARTES_PAR_JOUEUR; i++) {
-            joueur.ajouterCarte(pioche.at(i));
+            joueur->ajouterCarte(pioche.at(i));
         }
         pioche.erase(pioche.begin(), pioche.begin() + CARTES_PAR_JOUEUR);
     }
@@ -149,37 +134,62 @@ void Partie::startGame() {
 
 // TODO A quoi sert le % ?
 void Partie::endGame() {
-    Joueur &gagnant = listeJoueurs.at(0); //TODO pensez a trier listeJoueur pour savoir le gagnant (pas tjr .at(0))
-    gagnant.setNbrDePartiesGagnees(gagnant.getNbrDePartiesGagnees() + 1); //TODO on pt etre se debarasser des set..
-    cout << "La partie est finie !" << endl;
-    cout << "Nombre de tours : " << nbTour << endl;
 
-    cout << "le gagnant est : " << gagnant.getNom() << endl;
-    cout << "Scores : " << endl;
-    for (const Joueur &joueur : listeJoueurs) {
-        cout << "-" << joueur.getNom() << " : " << joueur.getNbrDeFamilles() << " familles ("
-             << int((double) joueur.getNbrDeFamilles() / NOMBRE_FAMILLES * 100) << " % des familles)" << endl;
-        if (joueur.getNbrDeFamilles() > gagnant.getNbrDeFamilles()) {
-            gagnant = joueur;
-        }
-    }
-}
-
-void Partie::afficherTour() {
-    cout << "*** Tour " << ++nbTour << " ***" << endl;
-    for (const Joueur &joueur : listeJoueurs) {
-        cout << joueur.getNom() << " : ";
-        for (Carte carte : joueur.getCartesEnMain()) {
+    //TODO Pas forcement utile, mais correspond à l'output du pdf
+    for (const auto joueur : listeJoueurs) {
+        cout << joueur->getNom() << " : ";
+        for (Carte carte : joueur->getCartesEnMain()) {
             cout << carte << "  ";
         }
         cout << "[";
-        for (Carte carte : joueur.getFamillesSurTable()) {
+        for (Carte carte : joueur->getFamillesSurTable()) {
             cout << carte << ".";
         }
         cout << "]" << endl;
     }
     cout << "Pioche : ";
     for (Carte carte : pioche) {
+        cout << carte << " ";
+    }
+    cout << endl;
+
+
+    Joueur& gagnant = *listeJoueurs.at(0); //TODO pensez a trier listeJoueur pour savoir le gagnant (pas tjr .at(0))
+    gagnant.setNbrDePartiesGagnees(gagnant.getNbrDePartiesGagnees() + 1); //TODO se debarasser des set..
+    cout << "La partie est finie !" << endl;
+    cout << "Nombre de tours : " << nbTour << endl;
+
+    cout << "le gagnant est : " << gagnant.getNom() << endl;
+    cout << "Scores : " << endl;
+    for (const auto joueur : listeJoueurs) {
+        cout << "-" << joueur->getNom() << " : " << joueur->getNbrDeFamilles() << " familles ("
+             << int((double) joueur->getNbrDeFamilles() / NOMBRE_FAMILLES * 100) << " % des familles)" << endl;
+        if (joueur->getNbrDeFamilles() > gagnant.getNbrDeFamilles()) {
+            gagnant = *joueur;
+        }
+    }
+
+    // Vide la main et les familles posées des joueurs.
+    for(Joueur* joueur : listeJoueurs){
+        joueur->videTout();
+    }
+}
+
+void Partie::afficherTour() {
+    cout << "*** Tour " << ++nbTour << " ***" << endl;
+    for (const auto joueur : listeJoueurs) {
+        cout << joueur->getNom() << " : ";
+        for (Carte carte : joueur->getCartesEnMain()) {
+            cout << carte << "  ";
+        }
+        cout << "[";
+        for (Carte carte : joueur->getFamillesSurTable()) {
+            cout << carte << ".";
+        }
+        cout << "]" << endl;
+    }
+    cout << "Pioche : ";
+    for (const Carte& carte : pioche) {
         cout << carte << " ";
     }
     cout << endl;
