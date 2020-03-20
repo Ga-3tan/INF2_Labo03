@@ -21,7 +21,7 @@
 
 using namespace std;
 
-MeilleurJoueur::MeilleurJoueur(const std::string& nom) : Joueur(nom) {}
+MeilleurJoueur::MeilleurJoueur(const std::string &nom) : Joueur(nom) {}
 
 
 // /!\ Les cartes en mains doivent être triées
@@ -39,7 +39,7 @@ Carte MeilleurJoueur::demanderCarte() const {
             compteurPresent = 1;
             familleCourante = carte.getFamille();
         }
-        if(compteurPresent > compteurPasse){
+        if (compteurPresent > compteurPasse) {
             compteurPasse = compteurPresent;
             choixFamille = familleCourante;
         }
