@@ -5,9 +5,9 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier .cpp de la class Partie
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
@@ -15,7 +15,6 @@
 #include "Partie.h"
 #include "ParametresJeu.h"
 #include <random>
-#include <vector>
 #include <algorithm>
 
 using namespace std;
@@ -53,43 +52,33 @@ void Partie::start() {
     end();
 }
 
-Carte Partie::piocherCarte() {
-    Carte carte = pioche.back();
-    pioche.pop_back();
-    return carte;
-}
 
-// TODO peut être ameliorer...
-Joueur *Partie::choisirJoueur(const Joueur &demandeur) {
+Joueur* Partie::choisirJoueur(const Joueur& demandeur) {
     // Liste des joueurs possibles
-    vector<Joueur *> joueursPossible;
+    vector<Joueur*> joueursPossible;
     for (const auto joueur : listeJoueurs) {
         if (!(*joueur == demandeur || joueur->mainVide())) {
             joueursPossible.push_back(joueur);
         }
     }
     // Retourne un joueur aleatoire
-    Joueur *joueurChoisi = joueursPossible.at(rand() % joueursPossible.size());
+    Joueur* joueurChoisi = joueursPossible.at(rand() % joueursPossible.size());
     return *find(listeJoueurs.begin(), listeJoueurs.end(), joueurChoisi);
 }
 
-bool Partie::partieFinie() const {
-    for (const auto joueur : listeJoueurs) {
-        if (!joueur->mainVide()) {
-            return false;
-        }
-    }
-    return pioche.empty();
+Carte Partie::piocherCarte() {
+    Carte carte = pioche.back();
+    pioche.pop_back();
+    return carte;
 }
 
-//TODO Mettre au propre/ameliorer
 void Partie::gameLoop() {
     while (!partieFinie()) {
         // Affiche le tour
         afficherTour();
 
         // Chaque joueur tour a tour
-        for (Joueur *joueurCourant : listeJoueurs) {
+        for (Joueur* joueurCourant : listeJoueurs) {
             if (!partieFinie()) {
                 bool possedeCarte;
                 do {
@@ -101,7 +90,7 @@ void Partie::gameLoop() {
                     if (!joueurCourant->mainVide()) {
                         // Choisi joueur et carte
                         Carte carteChoisi = joueurCourant->demanderCarte();
-                        Joueur *joueurChoisi = choisirJoueur(*joueurCourant);
+                        Joueur* joueurChoisi = choisirJoueur(*joueurCourant);
                         cout << joueurCourant->getNom() << " demande a " << joueurChoisi->getNom()
                              << " la carte " << carteChoisi << endl;
 
@@ -129,7 +118,14 @@ void Partie::gameLoop() {
     }
 }
 
-
+bool Partie::partieFinie() const {
+    for (const auto joueur : listeJoueurs) {
+        if (!joueur->mainVide()) {
+            return false;
+        }
+    }
+    return pioche.empty();
+}
 
 void Partie::end() {
     for (const auto joueur : listeJoueurs) {
@@ -153,8 +149,8 @@ void Partie::end() {
     cout << "Nombre de tours : " << nbTour << endl;
 
     // Vide la main et les familles posées des joueurs.
-    for (Joueur *joueur : listeJoueurs) {
-        joueur->videTout();
+    for (Joueur* joueur : listeJoueurs) {
+        joueur->viderCartes();
     }
 }
 

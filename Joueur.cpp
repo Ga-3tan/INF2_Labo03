@@ -5,9 +5,9 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier .cpp de la class Joueur
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
@@ -20,22 +20,42 @@
 
 using namespace std;
 
+Joueur::Joueur(const string& nom) : nom(nom), nbFamilles(0) {}
 
-Joueur::Joueur(const string& nom) : nom(nom) {
-    nbFamilles = 0;
-    nbVictoires = 0;
+bool Joueur::operator==(const Joueur& joueur2) const {
+    return this->nom == joueur2.nom;
 }
 
-unsigned Joueur::getNbrDeFamilles() const{ return nbFamilles; }
+std::string Joueur::getNom() const { return nom; }
 
-unsigned Joueur::getNbrDePartiesGagnees() const{ return nbVictoires; }
+std::vector<Carte> Joueur::getCartesEnMain() const { return cartesEnMain; }
 
-void Joueur::setNbrDeFamilles(unsigned i) { nbFamilles = i; }
+std::vector<Carte> Joueur::getFamillesSurTable() const { return famillesSurTable; }
 
-void Joueur::setNbrDePartiesGagnees(unsigned i) { nbVictoires = i; }
+unsigned Joueur::getNbFamilles() const{ return nbFamilles; }
 
-void Joueur::ajouterCarte(const Carte& carte) {
-    cartesEnMain.push_back(carte);
+void Joueur::ajouterCarte(const Carte& carte) { cartesEnMain.push_back(carte); }
+
+Carte Joueur::demanderCarte() const {
+    // Choix de famille aleatoire
+    unsigned short choixFamille = cartesEnMain.at(rand() % cartesEnMain.size()).getFamille();
+
+    // Genere les cartes possibles
+    vector<Carte> cartesPossibles;
+    for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
+        cartesPossibles.emplace_back(choixFamille, c);
+    }
+
+    // Supprime les cartes presentes dans la main
+    for (const Carte& c : cartesEnMain) {
+        auto position = find(cartesPossibles.begin(), cartesPossibles.end(), c);
+        if (position != cartesPossibles.end()) {
+            cartesPossibles.erase(position);
+        }
+    }
+
+    // Choix de carte aleatoire
+    return cartesPossibles.at(rand() % cartesPossibles.size());
 }
 
 bool Joueur::donnerCarte(Joueur& demandeur, const Carte& carte) {
@@ -49,31 +69,7 @@ bool Joueur::donnerCarte(Joueur& demandeur, const Carte& carte) {
     }
 }
 
-// TODO  ajouter warning a doxygen: " /!\ Verifier que la main du joueur n'est pas vide "
-Carte Joueur::demanderCarte() const {
-    // Choix de famille aleatoire
-    unsigned short choixFamille = cartesEnMain.at(rand() % cartesEnMain.size()).getFamille();
-
-    // Genere les cartes possibles
-    vector<Carte> cartesPossibles;
-    for (char c = 'A'; c < 'A' + CARTES_PAR_FAMILLE; ++c) {
-        cartesPossibles.emplace_back(choixFamille, c);
-    }
-
-    // Supprime les cartes presentes dans la main
-    for (const Carte &c : cartesEnMain) {
-        auto itCarte = find(cartesPossibles.begin(), cartesPossibles.end(), c);
-        if (itCarte != cartesPossibles.end()) {
-            cartesPossibles.erase(itCarte);
-        }
-    }
-
-    // Choix de carte aleatoire
-    return cartesPossibles.at(rand() % cartesPossibles.size());
-}
-
-
-bool Joueur::detecterFamille() {
+void Joueur::detecterFamille() {
     // Trie les cartes en mains
     sort(cartesEnMain.begin(), cartesEnMain.end());
 
@@ -97,23 +93,16 @@ bool Joueur::detecterFamille() {
             // Supprime la famille de la main
             cartesEnMain.erase(cartesEnMain.begin() + debut, cartesEnMain.begin() + debut + CARTES_PAR_FAMILLE);
 
-            //incrémente la variable
+            // Incremente le nombre de famille
             ++nbFamilles;
-            return true;
+            return;
         }
     }
-    return false;
 }
 
 bool Joueur::mainVide() const { return cartesEnMain.empty(); }
 
-std::string Joueur::getNom() const { return nom; }
-
-bool Joueur::operator==(const Joueur& joueur2) const {
-    return this->nom == joueur2.nom;
-}
-
-void Joueur::videTout() {
+void Joueur::viderCartes() {
     cartesEnMain.clear();
     famillesSurTable.clear();
 }

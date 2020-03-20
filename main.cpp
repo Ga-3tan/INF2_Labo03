@@ -5,9 +5,12 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier main qui execute un nombre de parties définit par
+                 NB_PARTIES.
+               - Les joueurs sont crées dans la listeJoueurs, 3 Joueurs
+                 simples et 1 MeilleurJoueur.
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
@@ -51,11 +54,11 @@ int main() {
     Joueur *gagnant = listeJoueurs.front();
     cout << endl << "Scores apres " << NB_PARTIES << " parties : " << endl;
     for (const auto joueur : listeJoueurs) {
-        cout << "-" << joueur->getNom() << " : " << joueur->getNbrDeFamilles() << " familles ("
+        cout << "-" << joueur->getNom() << " : " << joueur->getNbFamilles() << " familles ("
              << fixed << setprecision(PRECISION_POURCENT)
-             << (double) joueur->getNbrDeFamilles() / NOMBRE_FAMILLES / NB_PARTIES * 100
+             << (double) joueur->getNbFamilles() / NOMBRE_FAMILLES / NB_PARTIES * 100
              << " % des familles)" << endl;
-        if (joueur->getNbrDeFamilles() > gagnant->getNbrDeFamilles()) {
+        if (joueur->getNbFamilles() > gagnant->getNbFamilles()) {
             gagnant = joueur;
         }
     }

@@ -5,9 +5,9 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier header de la class Partie qui gère l'organisation du jeu
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
@@ -33,16 +33,16 @@ public:
     void start();
 
 private:
-    std::vector<Joueur *> listeJoueurs;
+    std::vector<Joueur*> listeJoueurs;
     std::vector<Carte> pioche;
     unsigned nbTour;
 
     /**
      * @brief Choisi un joueur aléatoirement
      * @param demandeur le joueur qui demande une carte
-     * @return un autre joueur qui n'a pas de main vide
+     * @return un pointeur sur un autre joueur qui n'a pas de main vide
      */
-    Joueur *choisirJoueur(const Joueur &demandeur);
+    Joueur* choisirJoueur(const Joueur& demandeur);
 
     /**
      * @brief Pioche une carte de la pile

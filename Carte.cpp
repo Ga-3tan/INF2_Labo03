@@ -5,9 +5,9 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier .cpp de la class Carte
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
@@ -29,6 +29,3 @@ std::ostream &operator<<(std::ostream& lhs, const Carte& rhs) {
 Carte::Carte(unsigned short famille, char membre) : famille(famille), membre(membre) {}
 
 unsigned short Carte::getFamille() const { return famille; }
-
-char Carte::getMembre() const { return membre; }
-

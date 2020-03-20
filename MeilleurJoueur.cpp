@@ -1,18 +1,17 @@
 /*
  -----------------------------------------------------------------------------------
- Laboratoire : 00
+ Laboratoire : 03
  Fichier     : MeilleurJoueur.cpp
- Auteur(s)   : Miguel Do Vale Lopes
- Date        : 20.03.2020
+ Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
+ Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier .cpp de la class MeilleurJoueur
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
 */
-
 #include "MeilleurJoueur.h"
 #include "ParametresJeu.h"
 #include <vector>
@@ -21,12 +20,9 @@
 
 using namespace std;
 
-MeilleurJoueur::MeilleurJoueur(const std::string &nom) : Joueur(nom) {}
+MeilleurJoueur::MeilleurJoueur(const std::string& nom) : Joueur(nom) {}
 
-
-// /!\ Les cartes en mains doivent être triées
 Carte MeilleurJoueur::demanderCarte() const {
-
     // Choix de famille qu'il possède le plus
     unsigned compteurPresent = 0;
     unsigned compteurPasse = 0;
@@ -52,7 +48,7 @@ Carte MeilleurJoueur::demanderCarte() const {
     }
 
     // Supprime les cartes presentes dans la main
-    for (const Carte &c : cartesEnMain) {
+    for (const Carte& c : cartesEnMain) {
         auto position = find(cartesPossibles.begin(), cartesPossibles.end(), c);
         if (position != cartesPossibles.end()) {
             cartesPossibles.erase(position);

@@ -5,9 +5,10 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         :  Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier avec les constantes global définissant les paramètres
+                 du jeu
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------

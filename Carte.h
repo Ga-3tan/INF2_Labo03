@@ -5,9 +5,10 @@
  Auteur(s)   : Do Vale Lopes Miguel, Tevaearai Rébecca, Zwick Gaétan
  Date        : 06.03.2020
 
- But         : <à compléter>
+ But         : Construire un système pouvant jouer au jeu des 7 familles
 
- Remarque(s) : <à compléter>
+ Remarque(s) : - Fichier header de la class Carte définissant les cartes selon
+                 une famille et un membre.
 
  Compilateur : g++ 7.4.0
  -----------------------------------------------------------------------------------
@@ -62,12 +63,6 @@ public:
      * @return un unsigned short correspondant à la famille
      */
     unsigned short getFamille() const;
-
-    /**
-     * @brief Retourne le membre de la carte
-     * @return un char correspondant au membre
-     */
-    char getMembre() const;
 
 private:
     unsigned short famille;
