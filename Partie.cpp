@@ -75,7 +75,7 @@ Carte Partie::piocherCarte() {
 void Partie::gameLoop() {
     while (!partieFinie()) {
         // Affiche le tour
-        afficherTour();
+//        afficherTour();
 
         // Chaque joueur tour a tour
         for (Joueur* joueurCourant : listeJoueurs) {
@@ -91,24 +91,26 @@ void Partie::gameLoop() {
                         // Choisi joueur et carte
                         Carte carteChoisi = joueurCourant->demanderCarte();
                         Joueur* joueurChoisi = choisirJoueur(*joueurCourant);
-                        cout << joueurCourant->getNom() << " demande a " << joueurChoisi->getNom()
-                             << " la carte " << carteChoisi << endl;
+//                        cout << joueurCourant->getNom() << " demande a " << joueurChoisi->getNom()
+//                             << " la carte " << carteChoisi << endl;
 
                         // Verifie et donne la carte si oui
                         possedeCarte = joueurChoisi->donnerCarte(*joueurCourant, carteChoisi);
-                        if (possedeCarte) {
-                            cout << "  et " << joueurChoisi->getNom() << " donne la carte a "
-                                 << joueurCourant->getNom() << endl;
-                        } else {
-                            cout << "  mais " << joueurChoisi->getNom() << " ne l'a pas" << endl;
-                        }
+//                        if (possedeCarte) {
+//                            cout << "  et " << joueurChoisi->getNom() << " donne la carte a "
+//                                 << joueurCourant->getNom() << endl;
+//                        } else {
+//                            cout << "  mais " << joueurChoisi->getNom() << " ne l'a pas" << endl;
+//                        }
                     }
 
                 } while (possedeCarte); // Rejoue si il a recu une carte
 
                 // Pioche une carte
                 if (!pioche.empty()) {
-                    joueurCourant->ajouterCarte(piocherCarte());
+                    Carte cartePioche = piocherCarte();
+//                    cout << joueurCourant->getNom() << " prend une carte dans la pioche (" << cartePioche << ")" << endl;
+                    joueurCourant->ajouterCarte(cartePioche);
                     joueurCourant->detecterFamille();
                 }
             } else {
@@ -128,25 +130,25 @@ bool Partie::partieFinie() const {
 }
 
 void Partie::end() {
-    for (const auto joueur : listeJoueurs) {
-        cout << joueur->getNom() << " : ";
-        for (Carte carte : joueur->getCartesEnMain()) {
-            cout << carte << "  ";
-        }
-        cout << "[";
-        for (Carte carte : joueur->getFamillesSurTable()) {
-            cout << carte << ".";
-        }
-        cout << "]" << endl;
-    }
-    cout << "Pioche : ";
-    for (Carte carte : pioche) {
-        cout << carte << " ";
-    }
-    cout << endl;
-
-    cout << "La partie est finie !" << endl;
-    cout << "Nombre de tours : " << nbTour << endl;
+//    for (const auto joueur : listeJoueurs) {
+//        cout << joueur->getNom() << " : ";
+//        for (Carte carte : joueur->getCartesEnMain()) {
+//            cout << carte << "  ";
+//        }
+//        cout << "[";
+//        for (Carte carte : joueur->getFamillesSurTable()) {
+//            cout << carte << ".";
+//        }
+//        cout << "]" << endl;
+//    }
+//    cout << "Pioche : ";
+//    for (Carte carte : pioche) {
+//        cout << carte << " ";
+//    }
+//    cout << endl;
+//
+//    cout << "La partie est finie !" << endl;
+//    cout << "Nombre de tours : " << nbTour << endl;
 
     // Vide la main et les familles posées des joueurs.
     for (Joueur* joueur : listeJoueurs) {
